@@ -6,7 +6,8 @@ class BTS
 {
 public:
     BTS& insert_node(int var);
-
+    BTS();
+    ~BTS();
 
 
 
@@ -28,6 +29,8 @@ BTS& BTS::insert_node(int var) // insert root or go insert subtree
 {
     if(pRoot_ == nullptr)
         pRoot_ = new Node(var,nullptr,nullptr);
+    else
+        insert_as_subtree(pRoot_,var);
 
     return *this;
 }
