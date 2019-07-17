@@ -6,12 +6,9 @@ class BTS
 {
 public:
     BTS& insert_node(int var);
-    BTS();
-    ~BTS();
 
-
-
-private:
+    BTS(): pRoot_{nullptr} {}
+    Node* get_root();
     struct Node
     {
         Node(int val, Node *ls, Node *rs) : data{val}, pLeft{ls}, pRight{rs}{}
@@ -21,8 +18,15 @@ private:
         Node *pRight;
     };
 
+
+
+private:
+
+
     Node *pRoot_;
     Node* insert_as_subtree(Node *node, int var);
+
+    void show(BTS::Node * pNode);
 };
 
 BTS& BTS::insert_node(int var) // insert root or go insert subtree
@@ -54,8 +58,31 @@ BTS::Node* BTS::insert_as_subtree(Node *node, int var)// create subtree
      }
 
 }
+
+void BTS::show(BTS::Node * pNode)
+{
+    if(pNode != nullptr)
+    {
+        show(pNode->pLeft);
+        cout << pNode->data<<endl;
+        show(pNode->pRight);
+    }
+
+}
+BTS::Node* BTS::get_root()
+{
+   return pRoot_;
+}
 int main()
 {
     cout << "Hello World!" << endl;
+    BTS first;
+    first.insert_node(15);
+    first.insert_node(7);
+    first.insert_node(2);
+    first.insert_node(22);
+    BTS::Node* start = first.get_root();
+    first.show(start);
+
     return 0;
 }
