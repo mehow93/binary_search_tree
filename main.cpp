@@ -8,7 +8,12 @@ public:
     BTS& insert_node(int var);
 
     BTS(): pRoot_{nullptr} {}
-    Node* get_root();
+    ~BTS();
+    void show_data();
+
+
+
+private:
     struct Node
     {
         Node(int val, Node *ls, Node *rs) : data{val}, pLeft{ls}, pRight{rs}{}
@@ -19,14 +24,13 @@ public:
     };
 
 
-
-private:
-
-
     Node *pRoot_;
-    Node* insert_as_subtree(Node *node, int var);
+    //some functions
+    Node* insert_as_subtree(Node* node, int var);
+    void show(Node* pNode);
+    void delete_from(Node* pNode); // clear data started from choosen node
+    void delete_all();
 
-    void show(BTS::Node * pNode);
 };
 
 BTS& BTS::insert_node(int var) // insert root or go insert subtree
@@ -38,7 +42,7 @@ BTS& BTS::insert_node(int var) // insert root or go insert subtree
 
     return *this;
 }
-BTS::Node* BTS::insert_as_subtree(Node *node, int var)// create subtree
+BTS::Node* BTS::insert_as_subtree(Node* node, int var)// create subtree
 {
     if(node == nullptr)
         return new Node(var,nullptr,nullptr);
@@ -59,7 +63,7 @@ BTS::Node* BTS::insert_as_subtree(Node *node, int var)// create subtree
 
 }
 
-void BTS::show(BTS::Node * pNode)
+void BTS::show(Node* pNode)
 {
     if(pNode != nullptr)
     {
@@ -69,9 +73,31 @@ void BTS::show(BTS::Node * pNode)
     }
 
 }
-BTS::Node* BTS::get_root()
+
+BTS::~BTS()
 {
-   return pRoot_;
+    delete_all();
+}
+
+
+void BTS:: delete_from(Node* pNode)
+{
+    if(pNode != nullptr)
+    {
+        delete_from(pNode->pLeft);
+        delete_from(pNode->pRight);
+        delete pNode;
+    }
+}
+void BTS::delete_all()
+{
+    delete_from(pRoot_);
+    pRoot_ = nullptr;
+}
+
+void BTS::show_data()
+{
+    show(pRoot_);
 }
 int main()
 {
@@ -81,8 +107,9 @@ int main()
     first.insert_node(7);
     first.insert_node(2);
     first.insert_node(22);
-    BTS::Node* start = first.get_root();
-    first.show(start);
+    first.show_data();
+
+
 
     return 0;
 }
