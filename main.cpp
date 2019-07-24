@@ -10,6 +10,8 @@ public:
     BTS(): pRoot_{nullptr} {}
     ~BTS();
     void show_data();
+    void find_min();
+    void find_max();
 
 
 
@@ -30,6 +32,8 @@ private:
     void show(Node* pNode);
     void delete_from(Node* pNode); // clear data started from choosen node
     void delete_all();
+    void search_for_min(Node* pNode);
+    void search_for_max(Node* pNode);
 
 };
 
@@ -99,15 +103,46 @@ void BTS::show_data()
 {
     show(pRoot_);
 }
+void BTS::search_for_min(Node* pNode)
+{
+    while(pNode->pLeft != nullptr)
+    {
+       pNode = pNode->pLeft;
+    }
+
+    cout << "Mininimum is: " << pNode->data << endl;
+}
+
+void BTS::find_min()
+{
+    search_for_min(pRoot_);
+}
+
+void BTS::search_for_max(Node* pNode)
+{
+    while(pNode->pRight != nullptr)
+    {
+       pNode = pNode->pRight;
+    }
+
+    cout << "Maximum is: " << pNode->data << endl;
+}
+void BTS::find_max()
+{
+    search_for_max(pRoot_);
+}
 int main()
 {
     cout << "Hello World!" << endl;
     BTS first;
     first.insert_node(15);
+    first.insert_node(1);
     first.insert_node(7);
-    first.insert_node(2);
     first.insert_node(22);
     first.show_data();
+    first.find_min();
+    first.find_max();
+
 
 
 
