@@ -106,12 +106,17 @@ void BTS::show_data()
 }
 void BTS::search_for_min(Node* pNode)
 {
-    while(pNode->pLeft != nullptr)
+    if(pNode != nullptr)
     {
-       pNode = pNode->pLeft;
-    }
+        while(pNode->pLeft != nullptr)
+        {
+            pNode = pNode->pLeft;
+        }
 
     cout << "Mininimum is: " << pNode->data << endl;
+    }
+
+
 }
 
 void BTS::find_min()
@@ -121,12 +126,18 @@ void BTS::find_min()
 
 void BTS::search_for_max(Node* pNode)
 {
-    while(pNode->pRight != nullptr)
+    if(pNode != nullptr)
     {
-       pNode = pNode->pRight;
-    }
+
+        while(pNode->pRight != nullptr)
+        {
+            pNode = pNode->pRight;
+        }
 
     cout << "Maximum is: " << pNode->data << endl;
+    }
+
+
 }
 void BTS::find_max()
 {
@@ -162,9 +173,9 @@ int main()
     cout << "Hello World!" << endl;
     BTS first;
     first.insert_node(15);
+    first.insert_node(12);
     first.insert_node(1);
-    first.insert_node(7);
-    first.insert_node(22);
+    first.insert_node(3);
     first.show_data();
     first.find_min();
     first.find_max();
