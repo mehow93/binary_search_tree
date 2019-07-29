@@ -37,8 +37,8 @@ private:
     void search_for_min(Node* pNode);
     void search_for_max(Node* pNode);
     int depth_of_tree(Node* pNode);
-    int delete_node(Node* pNode);
-    Node* search_for_node(Node* pNode, int var);
+    int delete_node(Node* pNode, int x);
+    void search_for_node(Node* pNode, int var);
 
 
 };
@@ -174,14 +174,14 @@ void BTS::print_depth()
     cout << "Depth of tree is: " << depth_of_tree(pRoot_)<<endl;
 }
 
-BTS::Node* BTS::search_for_node(Node* pNode, int var)
+void BTS::search_for_node(Node* pNode, int var)
 {
     if(pNode != nullptr)
     {
 
         if(var == pNode->data)
         {
-            return pNode;
+            cout << "The node is: "<< pNode->data <<endl;
         }
         else
         {
@@ -196,18 +196,48 @@ BTS::Node* BTS::search_for_node(Node* pNode, int var)
 
         }
     }
+    else
+    {
+        cout <<"Node does not exist"<<endl;
+    }
 }
 void BTS::find_node(int x)
 {
-    Node* temp = search_for_node(pRoot_,x);
-    cout<< "Node is:" << temp->data <<endl;
+    search_for_node(pRoot_,x);
+
 }
-int BTS::delete_node(Node* pNode)
+/*int BTS::delete_node(Node* pNode, int x)
 {
+    if(pNode != nullptr)
+    {
+
+        if(x == pNode->data)
+        {
+            if(pNode == pRoot_)
+            {
+                pRoot_ =
+            }
+        }
+        else
+        {
+            if(var <= pNode->data)
+            {
+                search_for_node(pNode->pLeft,var);
+            }
+            else
+            {
+                search_for_node(pNode->pRight,var);
+            }
+
+        }
+    }
+    else
+    {
+        cout <<"Node does not exist"<<endl;
+    }
 
 
-
-}
+}*/
 int main()
 {
     cout << "Hello World!" << endl;
@@ -220,7 +250,7 @@ int main()
     first.print_min();
     first.print_max();
     first.print_depth();
-    first.find_node(28);
+    first.find_node(3);
 
 
 
