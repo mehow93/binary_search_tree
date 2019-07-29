@@ -10,9 +10,10 @@ public:
     BTS(): pRoot_{nullptr} {}
     ~BTS();
     void show_data();
-    void find_min();
-    void find_max();
-    void find_depth();
+    void print_min();
+    void print_max();
+    void print_depth();
+
 
 
 private:
@@ -35,6 +36,9 @@ private:
     void search_for_min(Node* pNode);
     void search_for_max(Node* pNode);
     int depth_of_tree(Node* pNode);
+    int delete_node(Node* pNode);
+    Node* search_for_node(int var);
+
 
 };
 
@@ -119,7 +123,7 @@ void BTS::search_for_min(Node* pNode)
 
 }
 
-void BTS::find_min()
+void BTS::print_min()
 {
     search_for_min(pRoot_);
 }
@@ -139,7 +143,7 @@ void BTS::search_for_max(Node* pNode)
 
 
 }
-void BTS::find_max()
+void BTS::print_max()
 {
     search_for_max(pRoot_);
 }
@@ -163,10 +167,21 @@ int BTS::depth_of_tree(Node* pNode)
     }
 
 }
-void BTS::find_depth()
+void BTS::print_depth()
 {
 
     cout << "Depth of tree is: " << depth_of_tree(pRoot_)<<endl;
+}
+
+BTS::Node* BTS::search_for_node(int var)
+{
+    if
+}
+int BTS::delete_node(Node* pNode)
+{
+
+
+
 }
 int main()
 {
@@ -177,9 +192,9 @@ int main()
     first.insert_node(1);
     first.insert_node(3);
     first.show_data();
-    first.find_min();
-    first.find_max();
-    first.find_depth();
+    first.print_min();
+    first.print_max();
+    first.print_depth();
 
 
 
