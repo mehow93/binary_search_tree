@@ -14,6 +14,7 @@ public:
     void print_max();
     void print_depth();
     void find_node(int x);
+    void delete_node(int x);
 
 
 
@@ -198,7 +199,7 @@ void BTS::search_for_node(Node* pNode, int var)
     }
     else
     {
-        cout <<"Node does not exist"<<endl;
+        cout <<"Node " << var << " does not exist"<<endl;
     }
 }
 void BTS::find_node(int x)
@@ -206,7 +207,7 @@ void BTS::find_node(int x)
     search_for_node(pRoot_,x);
 
 }
-/*int BTS::delete_node(Node* pNode, int x)
+int BTS::delete_node(Node* pNode, int x)
 {
     if(pNode != nullptr)
     {
@@ -215,29 +216,46 @@ void BTS::find_node(int x)
         {
             if(pNode == pRoot_)
             {
-                pRoot_ =
+                Node* temp_right = pNode->pRight; // to save right saubtree
+                Node* temp_left = pNode->pLeft; // we must achieve leaf of left subtree to put there temp_right
+                pRoot_ = temp_left; // this is new root
+
+                while(temp_left->pRight != nullptr) // moving to leaf
+                {
+                    temp_left = temp_left->pRight;
+                }
+
+                temp_left->pRight = temp_right;// adding old right subtree
+                delete(pNode); // deleting node
+
             }
         }
         else
         {
-            if(var <= pNode->data)
+            if(x <= pNode->data)
             {
-                search_for_node(pNode->pLeft,var);
+                search_for_node(pNode->pLeft,x);
             }
             else
             {
-                search_for_node(pNode->pRight,var);
+                search_for_node(pNode->pRight,x);
             }
 
         }
     }
     else
     {
-        cout <<"Node does not exist"<<endl;
+
+        cout <<"Tree does not exist"<<endl;
     }
 
 
-}*/
+}
+
+void BTS:: delete_node(int x)
+{
+    delete_node(pRoot_,x);
+}
 int main()
 {
     cout << "Hello World!" << endl;
@@ -246,11 +264,12 @@ int main()
     first.insert_node(12);
     first.insert_node(1);
     first.insert_node(3);
+    first.insert_node(16);
     first.show_data();
-    first.print_min();
-    first.print_max();
-    first.print_depth();
-    first.find_node(3);
+    first.delete_node(18);
+    first.show_data();
+
+
 
 
 
