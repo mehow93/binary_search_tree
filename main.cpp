@@ -217,18 +217,36 @@ int BTS::delete_node(Node* pNode, int x)
             if(pNode == pRoot_)
             {
                 Node* temp_right = pNode->pRight; // to save right saubtree
-                Node* temp_left = pNode->pLeft; // we must achieve leaf of left subtree to put there temp_right
-                pRoot_ = temp_left; // this is new root
-
-                while(temp_left->pRight != nullptr) // moving to leaf
+                if(pNode->pLeft != nullptr) // both subtree or only left
                 {
-                    temp_left = temp_left->pRight;
+
+
+                    Node* temp_left = pNode->pLeft; // we must achieve leaf of left subtree to put there temp_right
+                    pRoot_ = temp_left; // this is new root
+
+                    while(temp_left->pRight != nullptr) // moving to leaf
+                    {
+                        temp_left = temp_left->pRight;
+                    }
+
+                    temp_left->pRight = temp_right;// adding old right subtree
+                    delete(pNode); // deleting node
+                }
+                else if (pNode->pLeft == nullptr && pNode->pRight != nullptr) // only right subtree
+                {
+                    Node* temp_right = pNode->pRight; // to save right saubtree
+                    pRoot_ = temp_right;
+                    delete(pNode);
+
+                }
+                else // only root exists
+                {
+                    delete(pNode);
+                    pRoot_ = nullptr;
                 }
 
-                temp_left->pRight = temp_right;// adding old right subtree
-                delete(pNode); // deleting node
-
             }
+
         }
         else
         {
@@ -261,12 +279,12 @@ int main()
     cout << "Hello World!" << endl;
     BTS first;
     first.insert_node(15);
-    first.insert_node(12);
-    first.insert_node(1);
-    first.insert_node(3);
     first.insert_node(16);
+    first.insert_node(18);
+    first.insert_node(14);
+    first.insert_node(1);
     first.show_data();
-    first.delete_node(18);
+    first.delete_node(15);
     first.show_data();
 
 
