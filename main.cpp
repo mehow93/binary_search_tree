@@ -214,13 +214,13 @@ int BTS::delete_node(Node* pNode, int x)
 
         if(x == pNode->data)
         {
-            if(pNode == pRoot_)
+            if(pNode == pRoot_) // if node is root
             {
-                Node* temp_right = pNode->pRight; // to save right saubtree
+
                 if(pNode->pLeft != nullptr) // both subtree or only left
                 {
 
-
+                    Node* temp_right = pNode->pRight; // to save right saubtree
                     Node* temp_left = pNode->pLeft; // we must achieve leaf of left subtree to put there temp_right
                     pRoot_ = temp_left; // this is new root
 
@@ -244,6 +244,11 @@ int BTS::delete_node(Node* pNode, int x)
                     delete(pNode);
                     pRoot_ = nullptr;
                 }
+
+            }
+            else
+            {
+
 
             }
 
@@ -279,10 +284,11 @@ int main()
     cout << "Hello World!" << endl;
     BTS first;
     first.insert_node(15);
-    first.insert_node(16);
-    first.insert_node(18);
+    first.insert_node(12);
     first.insert_node(14);
     first.insert_node(1);
+    first.insert_node(18);
+    first.insert_node(22);
     first.show_data();
     first.delete_node(15);
     first.show_data();
