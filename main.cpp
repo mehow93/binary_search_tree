@@ -36,9 +36,10 @@ private:
     void delete_from(Node* pNode); // clear data started from choosen node
     void delete_all();
     void search_for_min(Node* pNode);
+    Node* return_min(Node* pNode);
     void search_for_max(Node* pNode);
     int depth_of_tree(Node* pNode);
-    int delete_node(Node* pNode, int x);
+    Node* delete_node(Node* pNode, int x);
     void search_for_node(Node* pNode, int var);
 
 
@@ -207,71 +208,58 @@ void BTS::find_node(int x)
     search_for_node(pRoot_,x);
 
 }
-int BTS::delete_node(Node* pNode, int x)
+BTS::Node* BTS::return_min(Node* pNode)
 {
     if(pNode != nullptr)
     {
-
-        if(x == pNode->data)
+        while(pNode->pLeft != nullptr)
         {
-            if(pNode == pRoot_) // if node is root
-            {
-
-                if(pNode->pLeft != nullptr) // both subtree or only left
-                {
-
-                    Node* temp_right = pNode->pRight; // to save right saubtree
-                    Node* temp_left = pNode->pLeft; // we must achieve leaf of left subtree to put there temp_right
-                    pRoot_ = temp_left; // this is new root
-
-                    while(temp_left->pRight != nullptr) // moving to leaf
-                    {
-                        temp_left = temp_left->pRight;
-                    }
-
-                    temp_left->pRight = temp_right;// adding old right subtree
-                    delete(pNode); // deleting node
-                }
-                else if (pNode->pLeft == nullptr && pNode->pRight != nullptr) // only right subtree
-                {
-                    Node* temp_right = pNode->pRight; // to save right saubtree
-                    pRoot_ = temp_right;
-                    delete(pNode);
-
-                }
-                else // only root exists
-                {
-                    delete(pNode);
-                    pRoot_ = nullptr;
-                }
-
-            }
-            else
-            {
-
-
-            }
-
+            pNode = pNode->pLeft;
         }
-        else
-        {
-            if(x <= pNode->data)
-            {
-                search_for_node(pNode->pLeft,x);
-            }
-            else
-            {
-                search_for_node(pNode->pRight,x);
-            }
-
-        }
+           return pNode;
     }
-    else
+}
+BTS::Node* BTS ::delete_node(Node* pNode, int x)
+{
+    if(pNode == nullptr)
+    {
+        return pNode;
+    }
+    if(x < pNode->data)
+    {
+        pNode->pLeft = delete_node(pNode->pLeft,x);
+
+    }
+    if(x > pNode->data)
+    {
+        pNode->pRight = delete_node(pNode->pRight,x);
+    }
+    else // x = pNode->data, so this is node to delete
     {
 
-        cout <<"Tree does not exist"<<endl;
-    }
+        if(pNode->pRight == nullptr) // node is leaf, or has only one child
+        {
+            Node* temp = pNode->pLeft;
+            delete(pNode);
+            return temp;
+        }
+        else if (pNode->pLeft == nullptr)
+        {
+            Node* temp = pNode->pRight;
+            delete(pNode);
+            return temp;
+        }
+        else // two children
+        {
+            Node* temp = return_min(pNode->pRight); // searching for min value of right subtree
+            Node* temp_right_subtree = temp->pRight; // save data from right subtree of min value
+            pNode->data = temp->data; // assign min value to chosen node
+            delete(pNode->pRight); // deleting min of right subtree
+            pNode->pRight = temp_right_subtree;
 
+
+        }
+    }
 
 }
 
@@ -283,14 +271,12 @@ int main()
 {
     cout << "Hello World!" << endl;
     BTS first;
-    first.insert_node(15);
-    first.insert_node(12);
-    first.insert_node(14);
     first.insert_node(1);
-    first.insert_node(18);
-    first.insert_node(22);
+    first.insert_node(2);
+    first.insert_node(4);
+
     first.show_data();
-    first.delete_node(15);
+    first.delete_node(1);
     first.show_data();
 
 
