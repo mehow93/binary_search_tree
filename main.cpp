@@ -228,55 +228,62 @@ BTS::Node* BTS ::delete_node(Node* pNode, int x)
     if(x < pNode->data)
     {
         pNode->pLeft = delete_node(pNode->pLeft,x);
+        return pNode;
 
     }
     if(x > pNode->data)
     {
         pNode->pRight = delete_node(pNode->pRight,x);
+        return pNode;
     }
     else // x = pNode->data, so this is node to delete
     {
 
         if(pNode->pRight == nullptr) // node is leaf, or has only one child
         {
+
             Node* temp = pNode->pLeft;
             delete(pNode);
-            return temp;
+           return temp;
+
         }
         else if (pNode->pLeft == nullptr)
         {
+
             Node* temp = pNode->pRight;
             delete(pNode);
             return temp;
         }
         else // two children
         {
+
             Node* temp = return_min(pNode->pRight); // searching for min value of right subtree
             Node* temp_right_subtree = temp->pRight; // save data from right subtree of min value
             pNode->data = temp->data; // assign min value to chosen node
             delete(pNode->pRight); // deleting min of right subtree
             pNode->pRight = temp_right_subtree;
-
-
         }
+
     }
 
 }
 
 void BTS:: delete_node(int x)
 {
-    delete_node(pRoot_,x);
+    (void)delete_node(pRoot_,x);
 }
 int main()
 {
     cout << "Hello World!" << endl;
     BTS first;
-    first.insert_node(1);
-    first.insert_node(2);
-    first.insert_node(4);
-
+    first.insert_node(15);
+    first.insert_node(7);
+    first.insert_node(5);
+    first.insert_node(6);
+    first.insert_node(22);
+    first.insert_node(68);
     first.show_data();
-    first.delete_node(1);
+    first.delete_node(22);
     first.show_data();
 
 
