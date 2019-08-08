@@ -2,10 +2,11 @@
 
 using namespace std;
 
+template <typename T>
 class BTS
 {
 public:
-    BTS& insert_node(int var);
+    BTS& insert_node(T var);
 
     BTS(): pRoot_{nullptr} {}
     ~BTS();
@@ -13,17 +14,17 @@ public:
     void print_min();
     void print_max();
     void print_depth();
-    void find_node(int x);
-    void delete_node(int x);
+    void find_node(T x);
+    void delete_node(T x);
 
 
 
 private:
     struct Node
     {
-        Node(int val, Node *ls, Node *rs) : data{val}, pLeft{ls}, pRight{rs}{}
+        Node(T val, Node *ls, Node *rs) : data{val}, pLeft{ls}, pRight{rs}{}
         ~Node() { cout << "Deletion of: " << this->data << endl; }
-        int data;
+        T data;
         Node *pLeft;
         Node *pRight;
     };
@@ -31,7 +32,7 @@ private:
 
     Node *pRoot_;
     //some functions
-    Node* insert_as_subtree(Node* node, int var);
+    Node* insert_as_subtree(Node* node, T var);
     void show(Node* pNode);
     void delete_from(Node* pNode); // clear data started from choosen node
     void delete_all();
@@ -39,13 +40,14 @@ private:
     Node* return_min(Node* pNode);
     void search_for_max(Node* pNode);
     int depth_of_tree(Node* pNode);
-    Node* delete_node(Node* pNode, int x);
-    void search_for_node(Node* pNode, int var);
+    Node* delete_node(Node* pNode, T x);
+    void search_for_node(Node* pNode, T var);
 
 
 };
 
-BTS& BTS::insert_node(int var) // insert root or go insert subtree
+template <typename T>
+BTS<T>& BTS<T>::insert_node(T var) // insert root or go insert subtree
 {
     if(pRoot_ == nullptr)
         pRoot_ = new Node(var,nullptr,nullptr);
@@ -54,7 +56,8 @@ BTS& BTS::insert_node(int var) // insert root or go insert subtree
 
     return *this;
 }
-BTS::Node* BTS::insert_as_subtree(Node* node, int var)// create subtree
+template <typename T>
+typename BTS<T>::Node* BTS<T>::insert_as_subtree(Node* node, T var)// create subtree
 {
     if(node == nullptr)
         return new Node(var,nullptr,nullptr);
@@ -75,7 +78,8 @@ BTS::Node* BTS::insert_as_subtree(Node* node, int var)// create subtree
 
 }
 
-void BTS::show(Node* pNode)
+template <typename T>
+void BTS<T>::show(Node* pNode)
 {
     if(pNode != nullptr)
     {
@@ -86,13 +90,14 @@ void BTS::show(Node* pNode)
 
 }
 
-BTS::~BTS()
+template <typename T>
+BTS<T>::~BTS()
 {
     delete_all();
 }
 
-
-void BTS:: delete_from(Node* pNode)
+template <typename T>
+void BTS<T>:: delete_from(Node* pNode)
 {
     if(pNode != nullptr)
     {
@@ -101,17 +106,22 @@ void BTS:: delete_from(Node* pNode)
         delete pNode;
     }
 }
-void BTS::delete_all()
+
+template <typename T>
+void BTS<T>::delete_all()
 {
     delete_from(pRoot_);
     pRoot_ = nullptr;
 }
 
-void BTS::show_data()
+template <typename T>
+void BTS<T>::show_data()
 {
     show(pRoot_);
 }
-void BTS::search_for_min(Node* pNode)
+
+template <typename T>
+void BTS<T>::search_for_min(Node* pNode)
 {
     if(pNode != nullptr)
     {
@@ -126,12 +136,14 @@ void BTS::search_for_min(Node* pNode)
 
 }
 
-void BTS::print_min()
+template <typename T>
+void BTS<T>::print_min()
 {
     search_for_min(pRoot_);
 }
 
-void BTS::search_for_max(Node* pNode)
+template <typename T>
+void BTS<T>::search_for_max(Node* pNode)
 {
     if(pNode != nullptr)
     {
@@ -144,13 +156,16 @@ void BTS::search_for_max(Node* pNode)
     cout << "Maximum is: " << pNode->data << endl;
     }
 
-
 }
-void BTS::print_max()
+
+template <typename T>
+void BTS<T>::print_max()
 {
     search_for_max(pRoot_);
 }
-int BTS::depth_of_tree(Node* pNode)
+
+template <typename T>
+int BTS<T>::depth_of_tree(Node* pNode)
 {
     if(pNode == nullptr)
     {
@@ -170,13 +185,16 @@ int BTS::depth_of_tree(Node* pNode)
     }
 
 }
-void BTS::print_depth()
+
+template <typename T>
+void BTS<T>::print_depth()
 {
 
     cout << "Depth of tree is: " << depth_of_tree(pRoot_)<<endl;
 }
 
-void BTS::search_for_node(Node* pNode, int var)
+template <typename T>
+void BTS<T>::search_for_node(Node* pNode, T var)
 {
     if(pNode != nullptr)
     {
@@ -203,12 +221,16 @@ void BTS::search_for_node(Node* pNode, int var)
         cout <<"Node " << var << " does not exist"<<endl;
     }
 }
-void BTS::find_node(int x)
+
+template <typename T>
+void BTS<T>::find_node(T x)
 {
     search_for_node(pRoot_,x);
 
 }
-BTS::Node* BTS::return_min(Node* pNode)
+
+template <typename T>
+typename BTS<T>::Node* BTS<T>::return_min(Node* pNode)
 {
     if(pNode != nullptr)
     {
@@ -219,7 +241,9 @@ BTS::Node* BTS::return_min(Node* pNode)
            return pNode;
     }
 }
-BTS::Node* BTS ::delete_node(Node* pNode, int x)
+
+template <typename T>
+typename BTS<T>::Node* BTS<T> ::delete_node(Node* pNode, T x)
 {
     if(pNode == nullptr)
     {
@@ -268,28 +292,25 @@ BTS::Node* BTS ::delete_node(Node* pNode, int x)
 
 }
 
-void BTS:: delete_node(int x)
+template <typename T>
+void BTS<T>:: delete_node(T x)
 {
     (void)delete_node(pRoot_,x);
 }
 int main()
 {
     cout << "Hello World!" << endl;
-    BTS first;
+    BTS<int> first;
     first.insert_node(15);
     first.insert_node(7);
     first.insert_node(5);
     first.insert_node(6);
     first.insert_node(22);
     first.insert_node(68);
+    first.insert_node(45);
     first.show_data();
-    first.delete_node(22);
+    first.delete_node(68);
     first.show_data();
-
-
-
-
-
 
     return 0;
 }
