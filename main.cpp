@@ -312,5 +312,20 @@ int main()
     first.delete_node(68);
     first.show_data();
 
+    BTS<double> second;
+    second.insert_node(1.5);
+    second.insert_node(2.5);
+    second.insert_node(0.7);
+    second.insert_node(1.9);
+    second.insert_node(1.6);
+    second.insert_node(2.7);
+    second.show_data();
+    second.print_max();
+    second.print_min();
+    second.print_depth();
+
+    second.delete_node(2.5);
+    second.show_data();
+
     return 0;
 }
