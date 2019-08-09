@@ -240,6 +240,11 @@ typename BTS<T>::Node* BTS<T>::return_min(Node* pNode)
         }
            return pNode;
     }
+    else
+    {
+        return nullptr;
+    }
+
 }
 
 template <typename T>
@@ -282,10 +287,9 @@ typename BTS<T>::Node* BTS<T> ::delete_node(Node* pNode, T x)
         {
 
             Node* temp = return_min(pNode->pRight); // searching for min value of right subtree
-            Node* temp_right_subtree = temp->pRight; // save data from right subtree of min value
             pNode->data = temp->data; // assign min value to chosen node
-            delete(pNode->pRight); // deleting min of right subtree
-            pNode->pRight = temp_right_subtree;
+            (void)delete_node(pNode->pRight,temp->data); // deleting min of right subtree
+            return pNode;
         }
 
     }
@@ -300,7 +304,7 @@ void BTS<T>:: delete_node(T x)
 int main()
 {
     cout << "Hello World!" << endl;
-    BTS<int> first;
+    /*BTS<int> first;
     first.insert_node(15);
     first.insert_node(7);
     first.insert_node(5);
@@ -308,9 +312,10 @@ int main()
     first.insert_node(22);
     first.insert_node(68);
     first.insert_node(45);
+    first.insert_node(18);
     first.show_data();
-    first.delete_node(68);
-    first.show_data();
+    first.delete_node(15);
+    first.show_data();*/
 
     BTS<double> second;
     second.insert_node(1.5);
@@ -324,7 +329,7 @@ int main()
     second.print_min();
     second.print_depth();
 
-    second.delete_node(2.5);
+    second.delete_node(1.5);
     second.show_data();
 
     return 0;
