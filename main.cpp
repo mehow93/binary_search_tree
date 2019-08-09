@@ -314,10 +314,10 @@ int main()
     first.insert_node(45);
     first.insert_node(18);
     first.show_data();
-    first.delete_node(22);
+    first.delete_node(68);
     first.show_data();
 
-    /*BTS<double> second;
+    BTS<double> second;
     second.insert_node(1.5);
     second.insert_node(2.5);
     second.insert_node(0.7);
@@ -329,8 +329,8 @@ int main()
     second.print_min();
     second.print_depth();
 
-    second.delete_node(2.5);
-    second.show_data();*/
+    second.delete_node(0.7);
+    second.show_data();
 
     return 0;
 }
